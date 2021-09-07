@@ -1,0 +1,21 @@
+doctype html
+html
+   head
+      title Student List
+   body     
+      table(border="2" cellpadding="10") 
+        thead 
+            th Name   
+            th Delete    
+            th Add weight 
+        tbody 
+            each val in students
+                tr 
+                    td 
+                        a(href=`/studentdetails/${val._id}`) #{val.firstname}
+                    td
+                        a(href=`/deleteStudent/${val._id}`) DeleteStudent
+                    td
+                        a(href=`/addStudentWeightForm/${val._id}`) AddWeight
+
+      
