@@ -5,12 +5,13 @@ html
    body     
       table(border="2" cellpadding="10") 
         thead 
+            th ProfilePic
             th Name   
             th Delete    
             th Add weight 
         tbody 
             each val in students
-                tr 
+                tr                    
                     td 
                         a(href=`/studentdetails/${val._id}`) #{val.firstname}
                     td

@@ -4,7 +4,7 @@ const { MongoClient,ObjectId } = require('mongodb');
 var url = "mongodb://localhost:27017/";
 var path = require("path");
 const multer  = require('multer')
-
+app.use(express.static('uploads'));
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, __dirname+'/uploads')
@@ -114,4 +114,4 @@ app.post("/addStudentWeight",function(req,res){
     })
 })
 
-app.listen(8090,function(){console.log("App runnning on 8090")})
+app.listen(9090,function(){console.log("App runnning on 9090")})
