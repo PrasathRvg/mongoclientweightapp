@@ -1,9 +1,10 @@
 <html>
     <body>
-        <form action="/addStudent" method="POST">
+        <form action="/addStudent" method="POST" enctype="multipart/form-data">
             First Name: <input type="text" name="firstname"><br/>
             Last Name: <input type="text" name="lastname"><br/>
             Age: <input type="text" name="age"><br/>
+            Profile Pic: <input type="file" name="profilepic" id="pic"><br/>
             <button>Add Student</button>
         </form>
     </body>

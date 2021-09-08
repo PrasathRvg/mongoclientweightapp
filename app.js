@@ -2,6 +2,22 @@ var express = require("express");
 var app = express();
 const { MongoClient,ObjectId } = require('mongodb');
 var url = "mongodb://localhost:27017/";
+var path = require("path");
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, __dirname+'/uploads')
+    },
+    filename: function (req, file, cb) {
+        console.log("file in filename function::",file)
+        var fileext = path.extname(file.originalname);
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix+fileext)
+    }
+})
+
+const upload = multer({ storage: storage })
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -48,13 +64,18 @@ app.get("/studentRegistrationForm",function(req,res){
     res.sendFile(__dirname+"/stureg.html")
 })
 
-app.post("/addStudent",function(req,res){
+app.post("/addStudent",upload.single("profilepic"),function(req,res){
+    console.clear();
+    console.log("req.file",req.file);    
+    req.body.profilePic = req.file.filename;
+    console.log("req.body",req.body);
     MongoClient.connect(url,function(err,conn){
         var db = conn.db("delta");
         db.collection("students").insertOne(req.body,function(err,data){
             res.send(data)
         })
     })
+    //res.send("wait")
 })
 
 app.get("/deleteStudent/:id",function(req,res){
@@ -93,4 +114,4 @@ app.post("/addStudentWeight",function(req,res){
     })
 })
 
-app.listen(9090,function(){console.log("App runnning on 9090")})
+app.listen(8090,function(){console.log("App runnning on 8090")})
